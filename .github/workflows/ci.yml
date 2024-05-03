@@ -34,17 +34,14 @@ jobs:
       # - name: Test
       #   run: npm test -- --coverage
 
-      # Example of updating package.json version
       - name: Update package.json version
         if: startsWith(github.ref, 'refs/tags/')
         run: |
           echo "Updating package.json version..."
           npm version patch --no-git-tag-version
 
-      # Example of deploying to GitHub Pages
       - name: Deploy to GitHub Pages
-        if: startsWith(github.ref, 'refs/tags/')
-        run: |
-          echo "Deploying to GitHub Pages..."
-          npm install -g gh-pages
-          gh-pages -d build -b main
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./out
