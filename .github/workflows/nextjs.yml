@@ -98,7 +98,7 @@ jobs:
       # - name: Push changes
       #   run: git push origin HEAD:main
       - name: Update version in package.json
-        run: npm version patch # Or specify 'minor' or 'major' depending on your versioning strategy
+        run: npm version patch --force # Or specify 'minor' or 'major' depending on your versioning strategy
 
       - name: Create release tag
         run: |
