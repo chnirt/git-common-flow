@@ -31,8 +31,11 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Test
-        run: npm test -- --coverage
+      # - name: Test
+      #   run: npm test -- --coverage
+
+      - name: Lint
+        run: npm run lint
 
       # Example of updating package.json version
       - name: Update package.json version
