@@ -28,8 +28,6 @@ jobs:
   # Build job
   build:
     runs-on: ubuntu-latest
-    env:
-      GITHUB_TOKEN: ${{ secrets.TOKEN }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -83,10 +81,28 @@ jobs:
         with:
           path: ./out
 
-      - name: Semantic release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-        run: npx semantic-release
+      - name: Get current version
+        id: get_version
+        run: echo ::set-output name=version::$(node -p "require('./package.json').version")
+
+      - name: Bump version
+        id: bump_version
+        run: |
+          current_version=${{ steps.get_version.outputs.version }}
+          new_version=$(semver -i patch $current_version)
+          echo "::set-output name=version::$new_version"
+          echo "Bumped version from $current_version to $new_version"
+
+      - name: Update package.json
+        run: |
+          npm version ${{ steps.bump_version.outputs.version }} --allow-same-version
+          git add package.json
+          git commit -m "Bump version to ${{ steps.bump_version.outputs.version }}"
+        
+      - name: Push changes
+        uses: ad-m/github-push-action@v0.7.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
 
   # Deployment job
   deploy:
