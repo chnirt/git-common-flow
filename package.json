@@ -2,29 +2,6 @@
   "name": "git-common-flow",
   "version": "0.1.1",
   "private": true,
-  "plugins": [
-    "@semantic-release/commit-analyzer",
-    "@semantic-release/release-notes-generator",
-    "@semantic-release/changelog",
-    "@semantic-release/github",
-    "@semantic-release/npm",
-    "@semantic-release/git"
-  ],
-  "release": {
-    "prepare": [
-      "@semantic-release/changelog",
-      "@semantic-release/npm",
-      {
-        "path": "@semantic-release/git",
-        "assets": [
-          "package.json",
-          "package-lock.json",
-          "CHANGELOG.md"
-        ],
-        "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
-      }
-    ]
-  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -35,5 +12,5 @@
     "react": "^18",
     "react-dom": "^18",
     "next": "14.2.3"
-  },
+  }
 }
