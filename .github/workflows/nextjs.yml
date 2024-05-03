@@ -89,12 +89,14 @@ jobs:
         with:
           path: ./out
 
+      - name: Read version from package.json
+        id: version
+        run: echo "::set-output name=version::$(node -e 'console.log(require("./package.json").version)')"
+
       - name: Commit and push changes
         run: |
-          git config --local user.email "actions@github.com"
-          git config --local user.name "GitHub Actions"
           git add .
-          git commit -m "Bump version"
+          npm version patch -m "Bump version to ${{ steps.version.outputs.version }}"
           git push
 
   # Deployment job
