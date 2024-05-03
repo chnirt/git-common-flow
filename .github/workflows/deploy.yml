@@ -1,0 +1,33 @@
+name: Deploy to Staging and Production
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - "*"
+
+jobs:
+  deploy_staging:
+    name: Deploy to Staging
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      # Bước xây dựng ứng dụng
+      # Bước triển khai ứng dụng lên môi trường staging
+      # Bước thông báo hoặc release
+
+  deploy_production:
+    name: Deploy to Production
+    if: github.ref == 'refs/tags/*'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      # Bước xây dựng ứng dụng
+      # Bước triển khai ứng dụng lên môi trường production
+      # Bước thông báo hoặc release
