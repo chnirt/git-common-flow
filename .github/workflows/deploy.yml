@@ -19,14 +19,18 @@ jobs:
       - name: Use Node.js 20
         uses: actions/setup-node@v3
         with:
-          node-version: '20'
+          node-version: "20"
 
       - name: Install dependencies
         run: npm install
+      
+      - name: Set environment variables from .env.staging
+        run: |
+          echo "API_URL=${{ secrets.STAGING_API_URL }}" >> .env
+          echo "SECRET_KEY=${{ secrets.STAGING_SECRET_KEY }}" >> .env
 
       - name: Build for Staging
-        # run: npm run build:staging
-        run: npm run build
+        run: npm run build:staging
 
       - name: Deploy to Staging
         uses: peaceiris/actions-gh-pages@v3
@@ -46,14 +50,18 @@ jobs:
       - name: Use Node.js 20
         uses: actions/setup-node@v3
         with:
-          node-version: '20'
+          node-version: "20"
 
       - name: Install dependencies
         run: npm install
 
+      - name: Set environment variables from .env.production
+        run: |
+          echo "API_URL=${{ secrets.PRODUCTION_API_URL }}" >> .env
+          echo "SECRET_KEY=${{ secrets.PRODUCT_SECRET_KEY }}" >> .env
+
       - name: Build for Production
-        # run: npm run build:production
-        run: npm run build
+        run: npm run build:production
 
       - name: Deploy to Production
         uses: peaceiris/actions-gh-pages@v3
