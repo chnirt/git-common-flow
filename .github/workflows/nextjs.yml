@@ -32,6 +32,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Reset Git working directory
+        run: git reset --hard
+
       - name: Detect package manager
         id: detect-package-manager
         run: |
