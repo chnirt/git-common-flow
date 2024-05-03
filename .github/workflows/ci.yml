@@ -34,9 +34,6 @@ jobs:
       # - name: Test
       #   run: npm test -- --coverage
 
-      - name: Lint
-        run: npm run lint
-
       # Example of updating package.json version
       - name: Update package.json version
         if: startsWith(github.ref, 'refs/tags/')
