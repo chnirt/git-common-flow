@@ -84,24 +84,17 @@ jobs:
         with:
           path: ./out
 
-      - name: Install semver
-        run: npm install -g semver
-
-      - name: Get current version
-        id: get_version
-        run: echo ::set-output name=version::$(node -p "require('./package.json').version")
-
       - name: Bump version
         id: bump_version
         run: |
-          current_version=${{ steps.get_version.outputs.version }}
-          new_version=$(semver -i patch $current_version)
+          current_version=$(node -p "require('./package.json').version")
+          new_version=$(npm version patch)
           echo "::set-output name=version::$new_version"
           echo "Bumped version from $current_version to $new_version"
 
       - name: Update package.json
         run: |
-          npm version ${{ steps.bump_version.outputs.version }} --allow-same-version
+          npm version ${{ steps.bump_version.outputs.version }} --no-git-tag-version
           git add .
           git commit -m "Bump version to ${{ steps.bump_version.outputs.version }}"
         
