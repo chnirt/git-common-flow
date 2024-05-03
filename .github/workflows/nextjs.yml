@@ -32,19 +32,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set up Git
-        run: |
-          git config --global user.email "actions@github.com"
-          git config --global user.name "GitHub Actions"
-
-      - name: Bump version
-        id: bump_version
-        run: |
-          current_version=$(node -p "require('./package.json').version")
-          new_version=$(npm version patch)
-          echo "::set-output name=version::$new_version"
-          echo "Bumped version from $current_version to $new_version"
-
       - name: Detect package manager
         id: detect-package-manager
         run: |
@@ -94,17 +81,10 @@ jobs:
         with:
           path: ./out
 
-      - name: Add and commit changes
-        run: |
-          git config --local user.email "actions@github.com"
-          git config --local user.name "GitHub Actions"
-          git add package.json package-lock.json
-          git diff-index --quiet HEAD || git commit -m "Bump version to ${{ steps.bump_version.outputs.version }}"
-
-      - name: Push changes
-        uses: ad-m/github-push-action@v0.7.0
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Semantic release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: npx semantic-release
 
   # Deployment job
   deploy:
