@@ -99,7 +99,7 @@ jobs:
       - name: Update package.json
         run: |
           npm version ${{ steps.bump_version.outputs.version }} --allow-same-version
-          git add package.json
+          git add .
           git commit -m "Bump version to ${{ steps.bump_version.outputs.version }}"
         
       - name: Push changes
