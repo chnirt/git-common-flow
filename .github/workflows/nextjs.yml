@@ -89,18 +89,29 @@ jobs:
         with:
           path: ./out
 
-      - name: Ensure clean working directory
-        run: git diff --quiet || { echo "Working directory is not clean"; exit 1; }
-
       - name: Read version from package.json
         id: version
         run: echo "::set-output name=version::$(node -e 'console.log(require("./package.json").version)')"
 
-      - name: Commit and push changes
+      - name: Bump version
+        id: bump_version
         run: |
-          git add .
-          npm version patch -m "Bump version to ${{ steps.version.outputs.version }}"
-          git push
+          current_version=$(node -p "require('./package.json').version")
+          new_version=$(npm version patch)
+          echo "::set-output name=version::$new_version"
+          echo "Bumped version from $current_version to $new_version"
+
+      - name: Commit version bump
+        run: |
+          # git config --local user.email "actions@github.com"
+          # git config --local user.name "GitHub Actions"
+          git add package.json package-lock.json
+          git commit -m "Bump version to ${{ steps.bump_version.outputs.version }}"
+        
+      - name: Push changes
+        uses: ad-m/github-push-action@v0.7.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
 
   # Deployment job
   deploy:
