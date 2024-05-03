@@ -1,0 +1,50 @@
+name: CI/CD for React App
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  # Trigger workflow on tag creation
+  create:
+    tags:
+      - '*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build
+        run: npm run build
+
+      - name: Test
+        run: npm test -- --coverage
+
+      # Example of updating package.json version
+      - name: Update package.json version
+        if: startsWith(github.ref, 'refs/tags/')
+        run: |
+          echo "Updating package.json version..."
+          npm version patch --no-git-tag-version
+
+      # Example of deploying to GitHub Pages
+      - name: Deploy to GitHub Pages
+        if: startsWith(github.ref, 'refs/tags/')
+        run: |
+          echo "Deploying to GitHub Pages..."
+          npm install -g gh-pages
+          gh-pages -d build -b main
