@@ -70,10 +70,11 @@ jobs:
             ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json', '**/yarn.lock') }}-
       - name: Install dependencies
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
-      # - name: Set environment variables from secrets
-      #   run: |
-      #     echo "NEXT_PUBLIC_API_URL=${{ secrets.STAGING_API_URL }}" >> .env
-      #     echo "NEXT_PUBLIC_SECRET_KEY=${{ secrets.STAGING_SECRET_KEY }}" >> .env
+      - name: Create .env file
+        run: |
+          echo "NEXT_PUBLIC_API_URL=${{ secrets.STAGING_API_URL }}" > .env
+          # echo "NEXT_PUBLIC_SECRET_KEY=${{ secrets.STAGING_SECRET_KEY }}" >> .env
+          echo "NEXT_PUBLIC_SECRET_KEY=okay" >> .env
       - name: Build with Next.js
         run: |
           NEXT_PUBLIC_API_URL=${{ secrets.STAGING_API_URL }} NEXT_PUBLIC_SECRET_KEY=${{ secrets.STAGING_SECRET_KEY }} ${{ steps.detect-package-manager.outputs.runner }} next build
