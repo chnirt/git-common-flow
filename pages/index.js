@@ -9,6 +9,8 @@ const { version } = packageJson;
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
+  console.log("🚀 ~ Home ~ process.env:", process.env)
+  
   return (
     <>
       <Head>
