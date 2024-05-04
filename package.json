@@ -7,8 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "build:staging": "next build",
-    "build:production": "next build"
+    "build:staging": "next build --mode=staging",
+    "build:production": "next build --mode=production"
   },
   "dependencies": {
     "react": "^18",
