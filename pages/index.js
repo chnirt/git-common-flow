@@ -22,7 +22,7 @@ export default function Home() {
           <p>
             Get started by editing&nbsp;
             <code className={styles.code}>pages/index.js</code>
-            {process.env.API_URL}
+            {process.env.NEXT_PUBLIC_API_URL}
           </p>
           <div>
             <a
