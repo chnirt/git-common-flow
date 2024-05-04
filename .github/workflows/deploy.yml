@@ -75,9 +75,8 @@ jobs:
       #     echo "NEXT_PUBLIC_API_URL=${{ secrets.STAGING_API_URL }}" >> .env
       #     echo "NEXT_PUBLIC_SECRET_KEY=${{ secrets.STAGING_SECRET_KEY }}" >> .env
       - name: Build with Next.js
-        # run: ${{ steps.detect-package-manager.outputs.runner }} next build
         run: |
-          NEXT_PUBLIC_API_URL=hello ${{ steps.detect-package-manager.outputs.runner }} next build
+          NEXT_PUBLIC_API_URL=${{ secrets.STAGING_API_URL }} NEXT_PUBLIC_SECRET_KEY=${{ secrets.STAGING_SECRET_KEY }} ${{ steps.detect-package-manager.outputs.runner }} next build
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
