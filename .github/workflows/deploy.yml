@@ -82,7 +82,7 @@ jobs:
           path: ./out
 
   deploy_staging:
-    name: Deploy to Production
+    name: Deploy to Staging
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
