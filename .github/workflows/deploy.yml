@@ -70,16 +70,10 @@ jobs:
             ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json', '**/yarn.lock') }}-
       - name: Install dependencies
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
-      - shell: bash
-        env:
-          NEXT_PUBLIC_API_URL: ${{ secrets.STAGING_API_URL }}
-        run: |
-          echo "${{ env.NEXT_PUBLIC_API_URL }}"
       - name: Create .env file
         run: |
           echo "NEXT_PUBLIC_API_URL=${{ secrets.STAGING_API_URL }}" > .env
-          # echo "NEXT_PUBLIC_SECRET_KEY=${{ secrets.STAGING_SECRET_KEY }}" >> .env
-          echo "NEXT_PUBLIC_SECRET_KEY=okay" >> .env
+          echo "NEXT_PUBLIC_SECRET_KEY=${{ secrets.STAGING_SECRET_KEY }}" >> .env
       - name: Build with Next.js
         run: ${{ steps.detect-package-manager.outputs.runner }} next build
       - name: Upload artifact
@@ -151,9 +145,9 @@ jobs:
             ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json', '**/yarn.lock') }}-
       - name: Install dependencies
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
-      - name: Set environment variables from secrets
+      - name: Create .env file
         run: |
-          echo "NEXT_PUBLIC_API_URL=${{ secrets.PRODUCTION_API_URL }}" >> .env
+          echo "NEXT_PUBLIC_API_URL=${{ secrets.PRODUCTION_API_URL }}" > .env
           echo "NEXT_PUBLIC_SECRET_KEY=${{ secrets.PRODUCTION_SECRET_KEY }}" >> .env
       - name: Build with Next.js
         run: ${{ steps.detect-package-manager.outputs.runner }} next build
