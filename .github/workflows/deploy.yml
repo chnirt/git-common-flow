@@ -36,8 +36,9 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          # publish_dir: ./build/staging
-          publish_dir: .next
+          publish_dir: ./.next
+          publish_branch: gh-pages-staging
+          enable_jekyll: false
 
   deploy_production:
     name: Deploy to Production
@@ -67,5 +68,6 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          # publish_dir: ./build/production
-          publish_dir: .next
+          publish_dir: ./.next
+          publish_branch: gh-pages-production
+          enable_jekyll: false
