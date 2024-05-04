@@ -70,8 +70,11 @@ jobs:
             ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json', '**/yarn.lock') }}-
       - name: Install dependencies
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
-      - name: My Step
-        run: echo "My secret is ${{ secrets.STAGING_API_URL }}"
+      - shell: bash
+        env:
+          NEXT_PUBLIC_API_URL: ${{ secrets.STAGING_API_URL }}
+        run: |
+          echo "$NEXT_PUBLIC_API_URL"
       - name: Create .env file
         run: |
           echo "NEXT_PUBLIC_API_URL=${{ secrets.STAGING_API_URL }}" > .env
