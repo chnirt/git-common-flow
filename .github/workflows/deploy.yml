@@ -57,7 +57,8 @@ jobs:
           git commit -m "Update version to ${new_version}"
           git push origin HEAD:main
 
-  build_and_deploy_after_update_version:
+  build_after_update_version:
+    if: startsWith(github.ref, 'refs/tags/')
     runs-on: ubuntu-latest
     needs: update_version
     steps:
@@ -72,11 +73,28 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Create .env file
+        run: |
+          echo "NEXT_PUBLIC_API_URL=${{ secrets.PRODUCTION_API_URL }}" > .env
+          echo "NEXT_PUBLIC_SECRET_KEY=${{ secrets.PRODUCTION_SECRET_KEY }}" >> .env
+
       - name: Build Next.js app
         run: npm run build
 
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v4
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./.next
+          path: ./out
+
+  deploy:
+    name: Deploy to Production
+    if: startsWith(github.ref, 'refs/tags/')
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build_after_update_version
+    steps:
+      - name: Deploy to Production
+        id: deployment
+        uses: actions/deploy-pages@v4
