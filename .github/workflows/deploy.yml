@@ -5,7 +5,7 @@ on:
     branches:
       - main
     tags:
-      - '*'
+      - "*"
 
 permissions:
   contents: read
@@ -24,6 +24,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Reset Git working directory
+        run: git reset --hard
+
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
@@ -35,6 +38,13 @@ jobs:
       - name: Build Next.js app
         run: npm run build
 
+      - name: Deploy to Vercel (staging)
+        uses: amondnet/vercel-action@v20
+        with:
+          vercel_token: ${{ secrets.VERCEL_TOKEN }}
+          vercel_project_id: ${{ secrets.VERCEL_PROJECT_ID }}
+          vercel_scope: staging
+
   update_version:
     if: startsWith(github.ref, 'refs/tags/')
     runs-on: ubuntu-latest
@@ -42,23 +52,23 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # - name: Update Version in package.json
-      #   id: update_version
-      #   if: startsWith(github.ref, 'refs/tags/')
-      #   run: |
-      #     new_version=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
-      #     npm version $new_version --no-git-tag-version
-      #     echo "Updated version to $new_version in package.json"
-      #     echo "new_version=${new_version}" >> $GITHUB_ENV
+      - name: Update Version in package.json
+        id: update_version
+        if: startsWith(github.ref, 'refs/tags/')
+        run: |
+          new_version=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+          npm version $new_version --no-git-tag-version
+          echo "Updated version to $new_version in package.json"
+          echo "new_version=${new_version}" >> $GITHUB_ENV
 
-      # - name: Commit Version Change
-      #   if: startsWith(github.ref, 'refs/tags/')
-      #   run: |
-      #     git config --local user.email "action@github.com"
-      #     git config --local user.name "GitHub Action"
-      #     git add package.json
-      #     git commit -m "Update version to ${new_version}"
-      #     git push origin HEAD:main
+      - name: Commit Version Change
+        if: startsWith(github.ref, 'refs/tags/')
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add package.json
+          git commit -m "Update version to ${new_version}"
+          git push origin HEAD:main
 
   build_after_update_version:
     if: startsWith(github.ref, 'refs/tags/')
@@ -76,33 +86,20 @@ jobs:
         with:
           node-version: "20"
 
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
-        with:
-          # Automatically inject basePath in your Next.js configuration file and disable
-          # server side image optimization (https://nextjs.org/docs/api-reference/next/image#unoptimized).
-          #
-          # You may remove this line if you want to manage the configuration yourself.
-          static_site_generator: next
-
       - name: Install dependencies
         run: npm install
 
-      - name: Create .env file
-        run: |
-          echo "NEXT_PUBLIC_API_URL=${{ secrets.PRODUCTION_API_URL }}" > .env
-          echo "NEXT_PUBLIC_SECRET_KEY=${{ secrets.PRODUCTION_SECRET_KEY }}" >> .env
-
-      - name: Build with Next.js
+      - name: Build Next.js app
         run: npm run build
 
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+      - name: Deploy to Vercel (production)
+        uses: amondnet/vercel-action@v20
         with:
-          path: ./out
+          vercel_token: ${{ secrets.VERCEL_TOKEN }}
+          vercel_project_id: ${{ secrets.VERCEL_PROJECT_ID }}
+          vercel_scope: production
 
-  deploy:
-    name: Deploy to Production
+  deploy_production:
     if: startsWith(github.ref, 'refs/tags/')
     environment:
       name: github-pages
