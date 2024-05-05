@@ -21,8 +21,8 @@ export default function Home() {
         <div className={styles.description}>
           <p>
             Get started by editing&nbsp;
-            <code className={styles.code}>pages/index.js</code>
-            {version} {process.env.NEXT_PUBLIC_API_URL}{" "}
+            <code className={styles.code}>pages/index.js</code> {version}{" "}
+            {process.env.NEXT_PUBLIC_API_URL}{" "}
             {process.env.NEXT_PUBLIC_SECRET_KEY}
           </p>
           <div>
