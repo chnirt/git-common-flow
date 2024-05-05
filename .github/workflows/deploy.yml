@@ -48,10 +48,10 @@ jobs:
       - uses: amondnet/vercel-action@v25 #deploy
         with:
           vercel-token: ${{ secrets.VERCEL_TOKEN }} # Required
-          github-token: ${{ secrets.GITHUB_TOKEN }} #Optional 
-          vercel-org-id: ${{ secrets.VERCEL_ORG_ID}}  #Required
-          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID}} #Required 
-          working-directory: example/express-basic-auth
+          github-token: ${{ secrets.GITHUB_TOKEN }} #Optional
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID}} #Required
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID}} #Required
+          github-comment: false
 
   update_version:
     if: startsWith(github.ref, 'refs/tags/')
@@ -103,11 +103,11 @@ jobs:
       - uses: amondnet/vercel-action@v25 #deploy
         with:
           vercel-token: ${{ secrets.VERCEL_TOKEN }} # Required
-          github-token: ${{ secrets.GITHUB_TOKEN }} #Optional 
-          vercel-args: '--prod' #Optional
-          vercel-org-id: ${{ secrets.VERCEL_ORG_ID}}  #Required
-          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID}} #Required 
-          working-directory: example/express-basic-auth
+          github-token: ${{ secrets.GITHUB_TOKEN }} #Optional
+          vercel-args: "--prod" #Optional
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID}} #Required
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID}} #Required
+          github-comment: false
 
   deploy_production:
     if: startsWith(github.ref, 'refs/tags/')
