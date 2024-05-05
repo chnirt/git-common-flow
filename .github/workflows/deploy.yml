@@ -39,6 +39,7 @@ jobs:
 
       - name: Update Version in package.json
         if: startsWith(github.ref, 'refs/tags/')
+        id: update_version
         run: |
           new_version=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
           npm version $new_version --no-git-tag-version
@@ -48,5 +49,5 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/')
         run: |
           git add package.json
-          git commit -m "Update package.json version to $new_version"
+          git commit -m "Update package.json version to ${{ steps.update_version.outputs.new_version }}"
           git push origin ${{ github.ref }}
