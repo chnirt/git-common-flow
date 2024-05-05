@@ -25,7 +25,6 @@ export default function Home() {
             Get started by editing&nbsp;
             <code className={styles.code}>pages/index.js</code>{" "}
             {process.env.NEXT_PUBLIC_SECRET_KEY}
-            fix bug
           </p>
           <div>
             <a
