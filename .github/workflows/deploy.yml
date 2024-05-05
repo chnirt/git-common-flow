@@ -9,7 +9,7 @@ on:
 
 jobs:
   build_and_deploy:
-    if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/main' || github.event_name == 'push'
     runs-on: ubuntu-latest
     needs: update_version  # Wait for update_version job to complete
     steps:
