@@ -49,10 +49,9 @@ jobs:
         with:
           vercel-token: ${{ secrets.VERCEL_TOKEN }} # Required
           github-token: ${{ secrets.GITHUB_TOKEN }} #Optional 
-          vercel-args: '--prod' #Optional
           vercel-org-id: ${{ secrets.VERCEL_ORG_ID}}  #Required
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID}} #Required 
-          # working-directory: ./sub-directory
+          working-directory: example/express-basic-auth
 
   update_version:
     if: startsWith(github.ref, 'refs/tags/')
@@ -101,12 +100,14 @@ jobs:
       - name: Build Next.js app
         run: npm run build
 
-      - name: Deploy to Vercel (production)
-        uses: amondnet/vercel-action@v20
+      - uses: amondnet/vercel-action@v25 #deploy
         with:
-          vercel_token: ${{ secrets.VERCEL_TOKEN }}
-          vercel_project_id: ${{ secrets.VERCEL_PROJECT_ID }}
-          vercel_scope: production
+          vercel-token: ${{ secrets.VERCEL_TOKEN }} # Required
+          github-token: ${{ secrets.GITHUB_TOKEN }} #Optional 
+          vercel-args: '--prod' #Optional
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID}}  #Required
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID}} #Required 
+          working-directory: example/express-basic-auth
 
   deploy_production:
     if: startsWith(github.ref, 'refs/tags/')
