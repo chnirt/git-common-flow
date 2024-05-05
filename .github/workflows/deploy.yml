@@ -91,7 +91,7 @@ jobs:
           echo "NEXT_PUBLIC_SECRET_KEY=${{ secrets.PRODUCTION_SECRET_KEY }}" >> .env
 
       - name: Build with Next.js
-        run: ${{ steps.detect-package-manager.outputs.runner }} next build
+        run: npm run build
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
