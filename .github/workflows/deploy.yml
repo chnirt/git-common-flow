@@ -32,8 +32,7 @@ jobs:
           publish_dir: ./out
           publish_branch: gh-pages
 
-      - name: Set Git user information
-        if: startsWith(github.ref, 'refs/tags/')
+      - name: Set up Git
         run: |
           git config --global user.name "${{ github.actor }}"
           git config --global user.email "${{ github.actor }}@users.noreply.github.com"
@@ -51,5 +50,5 @@ jobs:
         run: |
           git add package.json
           git commit -m "Update package.json version to ${{ steps.update_version.outputs.new_version }}"
-          git push https://github.com/${{ github.repository }} HEAD:refs/tags/${{ github.ref }} -f
+          git push origin main
 
