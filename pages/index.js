@@ -3,7 +3,7 @@
 import { Inter } from "next/font/google";
 // import styles from "@/styles/Home.module.css";
 import packageJson from "../package.json";
-import FilterAndPagination from "@/components/FilterAndPagination";
+import FilterAndPagination from "@/components/FilterAndPagination/FilterAndPagination";
 
 const { version } = packageJson;
 
