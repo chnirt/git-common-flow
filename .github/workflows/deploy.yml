@@ -55,6 +55,9 @@ jobs:
       - name: Install dependencies
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
 
+      - name: Run tests
+        run: npm test
+
       - name: Create .env file
         run: |
           echo "NEXT_PUBLIC_API_URL=${{ secrets.STAGING_API_URL }}" > .env
@@ -138,6 +141,9 @@ jobs:
 
       - name: Install dependencies
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
+
+      - name: Run tests
+        run: npm test
 
       - name: Create .env file
         run: |
