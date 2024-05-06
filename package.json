@@ -11,8 +11,9 @@
     "build:production": "next build --mode=production"
   },
   "dependencies": {
+    "next": "14.2.3",
     "react": "^18",
     "react-dom": "^18",
-    "next": "14.2.3"
+    "swr": "^2.2.5"
   }
 }
