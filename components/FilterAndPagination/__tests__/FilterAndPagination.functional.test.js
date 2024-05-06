@@ -2,7 +2,7 @@ import React from "react";
 import { render, waitFor, fireEvent } from "@testing-library/react";
 import useSWR from "swr";
 import "@testing-library/jest-dom";
-import FilterAndPagination from "../FilterAndPagination";
+import FilterAndPagination from "..";
 
 // Mock SWR hook
 jest.mock("swr");
