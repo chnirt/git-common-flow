@@ -1,5 +1,5 @@
+import React, { useState } from "react";
 import useSWR from "swr";
-import { useState } from "react";
 import { apiUrlPosts } from "@/utils/apiConfig";
 
 // Function to fetch data from the API using SWR
