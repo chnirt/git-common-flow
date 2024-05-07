@@ -83,13 +83,15 @@ jobs:
       #     alias-domains: |
       #       git-common-flow-staging.vercel.app
 
-      - name: My first step - check out repository
-        uses: actions/checkout@v4
-      # This step references the directory that contains the action.
-      - name: Use local hello-world-action
-        uses: ./.github/actions/nextjs
-        with:
-          included: true
+      - name: Checkout repo
+        uses: actions/checkout@v2
+      - name: Run local action
+        uses: ./.github/actions/local-action
+
+      # - name: Use local hello-world-action
+      #   uses: ./.github/actions/nextjs
+      #   with:
+      #     included: true
 
   # e2e-tests-staging:
   #   needs: build_and_deploy_staging
