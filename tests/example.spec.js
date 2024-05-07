@@ -6,11 +6,9 @@ test("FilterAndPagination Component", async ({ page }) => {
   // Navigate to the localhost
   await page.goto(url);
 
-  await page.waitForTimeout(1000);
-
   // Wait for the list items to be present
-  await page.waitForSelector("ul");
-  const posts = await page.$$("ul");
+  await page.waitForSelector("li");
+  const posts = await page.$$("li");
   expect(posts.length).toBeGreaterThan(0);
 
   // Wait for the "Next Page" button to be present
