@@ -2,8 +2,6 @@ const { test, expect } = require("@playwright/test");
 
 // Test for FilterAndPagination Component
 test("FilterAndPagination Component", async ({ page }) => {
-  const url = process.env.URL;
-  console.log(`Environment: ${url}`);
   // Navigate to the localhost
   await page.goto(url);
 
