@@ -1,10 +1,10 @@
 const { test, expect } = require("@playwright/test");
 
-const url = process.env.URL;
-console.log(`Environment: ${url}`);
 
 // Test for FilterAndPagination Component
 test("FilterAndPagination Component", async ({ page }) => {
+  const url = process.env.URL;
+  console.log(`Environment: ${url}`);
   // Navigate to the localhost
   await page.goto(url);
 //   await page.goto("https://git-common-flow.vercel.app/");
