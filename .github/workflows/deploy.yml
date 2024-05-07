@@ -85,10 +85,6 @@ jobs:
 
       - name: Checkout repo
         uses: actions/checkout@v4
-        with:
-          sparse-checkout: |
-            .github/actions
-          path: actions
 
       - name: Run local action
         uses: ./.github/actions/local-action
