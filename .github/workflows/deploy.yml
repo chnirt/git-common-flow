@@ -164,7 +164,7 @@ jobs:
           github-comment: false
 
   e2e-tests:
-    needs: build_and_deploy
+    needs: update_version_build_and_deploy
     timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:
@@ -177,7 +177,8 @@ jobs:
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
     - name: Run Playwright tests
-      run: URL=https://git-common-flow-staging.vercel.app/ npx playwright test
+      # run: URL=https://git-common-flow-5vbt2c72z-chin-trinhs-projects.vercel.app/ npx playwright test
+      run: URL=https://git-common-flow.vercel.app/ npx playwright test
       # run: URL=http://localhost:3000/ npx playwright test
     - uses: actions/upload-artifact@v4
       if: always()
