@@ -83,10 +83,10 @@ jobs:
       #     alias-domains: |
       #       git-common-flow-staging.vercel.app
 
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Reuse action
-        uses: ./.github/actions/nextjs
+        uses: ./.github/actions/nextjs/action.yml
         with:
           included: true
 
