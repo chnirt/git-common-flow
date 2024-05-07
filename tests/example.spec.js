@@ -1,19 +1,44 @@
-// @ts-check
-const { test, expect } = require('@playwright/test');
+const { test, expect } = require("@playwright/test");
 
-test('has title', async ({ page }) => {
-  await page.goto('https://playwright.dev/');
+const url = process.env.URL;
+console.log(`Environment: ${url}`);
 
-  // Expect a title "to contain" a substring.
-  await expect(page).toHaveTitle(/Playwright/);
-});
+// Test for FilterAndPagination Component
+test("FilterAndPagination Component", async ({ page }) => {
+  // Navigate to the localhost
+//   await page.goto(url);
+//   await page.goto("https://git-common-flow.vercel.app/");
 
-test('get started link', async ({ page }) => {
-  await page.goto('https://playwright.dev/');
+  // Wait for the list items to be present
+  await page.waitForSelector("li");
+  const posts = await page.$$("li");
+  expect(posts.length).toBeGreaterThan(0);
 
-  // Click the get started link.
-  await page.getByRole('link', { name: 'Get started' }).click();
+  // Wait for the "Next Page" button to be present
+  await page.waitForSelector('button:has-text("Next Page")');
+  const nextButton = await page.$('button:has-text("Next Page")');
+  expect(nextButton).not.toBeNull();
 
-  // Expects page to have a heading with the name of Installation.
-  await expect(page.getByRole('heading', { name: 'Installation' })).toBeVisible();
+  // If the "Next Page" button is present, click on it
+  if (nextButton) {
+    await nextButton.click();
+    // Wait for the list items on the next page to be present
+    await page.waitForSelector("li");
+    const postsOnNextPage = await page.$$("li");
+    expect(postsOnNextPage.length).toBeGreaterThan(0);
+  }
+
+  // Wait for the "Previous Page" button to be present
+  await page.waitForSelector('button:has-text("Previous Page")');
+  const prevButton = await page.$('button:has-text("Previous Page")');
+  expect(prevButton).not.toBeNull();
+
+  // If the "Previous Page" button is present, click on it
+  if (prevButton) {
+    await prevButton.click();
+    // Wait for the list items on the previous page to be present
+    await page.waitForSelector("li");
+    const postsOnPrevPage = await page.$$("li");
+    expect(postsOnPrevPage.length).toBeGreaterThan(0);
+  }
 });
