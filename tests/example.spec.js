@@ -1,17 +1,17 @@
 const { test, expect } = require("@playwright/test");
 
-
 // Test for FilterAndPagination Component
 test("FilterAndPagination Component", async ({ page }) => {
   const url = process.env.URL;
   console.log(`Environment: ${url}`);
   // Navigate to the localhost
   await page.goto(url);
-//   await page.goto("https://git-common-flow.vercel.app/");
+
+  await page.waitForTimeout(1000);
 
   // Wait for the list items to be present
-  await page.waitForSelector("li");
-  const posts = await page.$$("li");
+  await page.waitForSelector("ul");
+  const posts = await page.$$("ul");
   expect(posts.length).toBeGreaterThan(0);
 
   // Wait for the "Next Page" button to be present
