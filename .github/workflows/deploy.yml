@@ -83,10 +83,10 @@ jobs:
       #     alias-domains: |
       #       git-common-flow-staging.vercel.app
 
-      # - name: Include steps from base.yml
-      #   uses: ./.github/actions/nextjs
-      #   with:
-      #     included: true
+      - name: Include steps from base.yml
+        uses: ./.github/actions/nextjs
+        with:
+          included: true
 
   # e2e-tests-staging:
   #   needs: build_and_deploy_staging
