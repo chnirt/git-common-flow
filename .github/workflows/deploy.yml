@@ -21,8 +21,8 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # - name: Reset Git working directory
-      #   run: git reset --hard
+      - name: Reset Git working directory
+        run: git reset --hard
 
       # - name: Detect package manager
       #   id: detect-package-manager
@@ -42,10 +42,10 @@ jobs:
       #       exit 1
       #     fi
 
-      # - name: Setup Node
-      #   uses: actions/setup-node@v4
-      #   with:
-      #     node-version: "20"
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
 
       # - name: Restore cache
       #   uses: actions/cache@v4
