@@ -7,13 +7,19 @@ on:
     tags:
       - "*"
 
+# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
+# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
+concurrency:
+  group: "deloy"
+  cancel-in-progress: false
+
 jobs:
   build_and_deploy_staging:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
-      # - name: Checkout repository
-      #   uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
       # - name: Reset Git working directory
       #   run: git reset --hard
@@ -79,6 +85,8 @@ jobs:
 
       - name: Include steps from base.yml
         uses: ./.github/workflows/nextjs.yml
+        with:
+          included: true
 
   e2e-tests-staging:
     needs: build_and_deploy_staging
