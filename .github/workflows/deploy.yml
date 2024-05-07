@@ -84,14 +84,9 @@ jobs:
       #       git-common-flow-staging.vercel.app
 
       - name: Checkout repo
-        uses: actions/checkout@v4
-        with:
-          sparse-checkout: |
-            .github/actions
-          path: actions
-
+        uses: actions/checkout@v2
       - name: Run local action
-        uses: ./.github/actions/local-action
+        uses: ./.github/actions/local-action/action.yml
 
       # - name: Use local hello-world-action
       #   uses: ./.github/actions/nextjs
