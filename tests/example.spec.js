@@ -6,7 +6,7 @@ console.log(`Environment: ${url}`);
 // Test for FilterAndPagination Component
 test("FilterAndPagination Component", async ({ page }) => {
   // Navigate to the localhost
-//   await page.goto(url);
+  await page.goto(url);
 //   await page.goto("https://git-common-flow.vercel.app/");
 
   // Wait for the list items to be present
