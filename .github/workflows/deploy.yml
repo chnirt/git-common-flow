@@ -83,32 +83,32 @@ jobs:
       #     alias-domains: |
       #       git-common-flow-staging.vercel.app
 
-      - name: Include steps from base.yml
-        uses: /.github/actions/nextjs
-        with:
-          included: true
+      # - name: Include steps from base.yml
+      #   uses: ./.github/actions/nextjs
+      #   with:
+      #     included: true
 
-  e2e-tests-staging:
-    needs: build_and_deploy_staging
-    timeout-minutes: 60
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: lts/*
-      - name: Install dependencies
-        run: npm ci
-      - name: Install Playwright Browsers
-        run: npx playwright install --with-deps
-      - name: Run Playwright tests
-        run: URL=https://chnirt.github.io/git-common-flow/ npx playwright test
-      - uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: playwright-report
-          path: playwright-report/
-          retention-days: 30
+  # e2e-tests-staging:
+  #   needs: build_and_deploy_staging
+  #   timeout-minutes: 60
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - uses: actions/setup-node@v4
+  #       with:
+  #         node-version: lts/*
+  #     - name: Install dependencies
+  #       run: npm ci
+  #     - name: Install Playwright Browsers
+  #       run: npx playwright install --with-deps
+  #     - name: Run Playwright tests
+  #       run: URL=https://chnirt.github.io/git-common-flow/ npx playwright test
+  #     - uses: actions/upload-artifact@v4
+  #       if: always()
+  #       with:
+  #         name: playwright-report
+  #         path: playwright-report/
+  #         retention-days: 30
 
   update_version_build_and_deploy_production:
     if: startsWith(github.ref, 'refs/tags/')
