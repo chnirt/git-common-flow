@@ -83,8 +83,9 @@ jobs:
       #     alias-domains: |
       #       git-common-flow-staging.vercel.app
 
-      - uses: actions/checkout@v1
-      - name: Include steps from base.yml
+      - uses: actions/checkout@v3
+
+      - name: Reuse action
         uses: ./.github/actions/nextjs
         with:
           included: true
