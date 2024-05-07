@@ -83,10 +83,11 @@ jobs:
       #     alias-domains: |
       #       git-common-flow-staging.vercel.app
 
-      - uses: actions/checkout@v4
-
-      - name: Reuse action
-        uses: ./.github/actions/nextjs/action.yml
+      - name: My first step - check out repository
+        uses: actions/checkout@v4
+      # This step references the directory that contains the action.
+      - name: Use local hello-world-action
+        uses: ./.github/actions/nextjs
         with:
           included: true
 
