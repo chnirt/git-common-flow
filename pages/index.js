@@ -23,7 +23,7 @@ export default function Home() {
       </Head>
       <main className={`${styles.main} ${inter.className}`}>
         <FilterAndPagination />
-        hotfix-1
+        hotfix-2
       </main>
     </>
   );
