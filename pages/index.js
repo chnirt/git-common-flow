@@ -24,6 +24,7 @@ export default function Home() {
       <main className={`${styles.main} ${inter.className}`}>
         <FilterAndPagination />
         hotfix-2
+        feature-1
         feature-2
       </main>
     </>
